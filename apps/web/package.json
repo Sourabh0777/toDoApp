@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@repo/ui": "*",
+    "@typegoose/typegoose": "^12.4.0",
+    "axios": "^1.6.8",
+    "mongodb": "^3.5.9",
+    "mongoose": "^8.3.2",
     "next": "^14.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

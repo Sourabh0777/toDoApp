@@ -1,25 +1,22 @@
-export function Card({
-  className,
-  title,
-  children,
-  href,
-}: {
-  className?: string;
-  title: string;
-  children: React.ReactNode;
-  href: string;
-}): JSX.Element {
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
+
+export default function OutlinedCard({ children }: any) {
   return (
-    <a
-      className={className}
-      href={`${href}?utm_source=create-turbo&utm_medium=basic&utm_campaign=create-turbo"`}
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      <h2>
-        {title} <span>-&gt;</span>
-      </h2>
-      <p>{children}</p>
-    </a>
+    <Box sx={{
+      width: {
+        xs: '100%',
+        sm: '50%',
+        md: '83%',
+      }
+    }} >
+      <Card variant="outlined">{children}</Card>
+    </Box>
   );
 }

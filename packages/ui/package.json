@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+"./show-list-with-icons-to-delete-and-edit-and-image": "./src/show-list-with-icons-to-delete-and-edit-and-image.tsx",
+"./image-avatar": "./src/image-avatar.tsx",
+"./text-field": "./src/text-field.tsx",
     "./button": "./src/button.tsx",
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx"
