@@ -20,5 +20,9 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@mui/material-nextjs": "^5.15.11"
+  }
 }
