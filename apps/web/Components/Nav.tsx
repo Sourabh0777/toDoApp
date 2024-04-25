@@ -1,10 +1,8 @@
 // components/Nav.js
 "use client"
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 const Nav = () => {
-    const router = useRouter();
     const { data: session } = useSession();
 
     return (

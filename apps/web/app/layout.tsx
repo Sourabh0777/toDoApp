@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Nav from "../Components/Nav";
-import { SessionProvider } from "next-auth/react";
-import Providers from "./providers";
+import Provider from "../Components/Provider";
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,12 +16,12 @@ export default function RootLayout({ children, session }: any): JSX.Element {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers session={session} >
+        <Provider session={session} >
           <main>
             <Nav />
             {children}
           </main>
-        </Providers>
+        </Provider>
       </body>
     </html>
   );
