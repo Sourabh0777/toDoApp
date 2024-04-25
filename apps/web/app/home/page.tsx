@@ -22,17 +22,13 @@ export default function ToDo(): JSX.Element {
     const [changeHandler, setChangeHandler] = useState(false);
     //Fetch List
     useEffect(() => {
-        console.log("fetchTodos run again");
-
         fetchTodos(session?.user?.email);
-
     }, [changeHandler, session]);
     const fetchTodos = async (email: any) => {
         try {
             const res = await axios.get('/api/toDoList', {
                 params: { email },
             });
-            console.log("🚀 ~ fetchTodos ~ res:", res)
             setListArray(res.data.todos);
         } catch (error) {
             console.error('Error fetching todos:', error);
@@ -49,8 +45,13 @@ export default function ToDo(): JSX.Element {
             description: inputValue,
             userEmail: session?.user?.email
         });
-        setInputValue("");
-        setChangeHandler(!changeHandler)
+        if (res) {
+            setInputValue("");
+            setChangeHandler(!changeHandler)
+            return res
+        }
+
+
     };
 
     const setInputValueHandler = (item: string) => {

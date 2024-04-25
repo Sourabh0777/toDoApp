@@ -8,10 +8,8 @@ export async function GET(req: NextRequest, { params }: any): Promise<NextRespon
     const url = new URL(req.url);
     const searchParam = new URLSearchParams(url.searchParams);
     const userEmail = searchParam.get('email');
-    console.log('🚀 ~ GET ~ email:', userEmail);
     await dbConnect();
     const todos = await todoTask.find({ userEmail:userEmail });
-    console.log('🚀 ~ GET ~ todos:', todos);
     return NextResponse.json({ todos });
   } catch (error) {
     console.error('Error fetching todos:', error);
@@ -23,7 +21,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     await dbConnect();
     const { description, userEmail } = await req.json();
-    console.log('🚀 ~ POST ~ description, userEmail:', description, userEmail);
     const todo = new todoTask({ description: description, userEmail: userEmail });
     await todo.save();
     return NextResponse.json({ message: 'Todo created successfully', todo });
