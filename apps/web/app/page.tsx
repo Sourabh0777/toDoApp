@@ -17,37 +17,33 @@ import axios from "axios";
 export default function Page(): JSX.Element {
   const [listArray, setListArray] = useState([]);
   let [inputValue, setInputValue] = useState("");
-  // useEffect(() => {
-  //   fetchTodos();
-  // }, []);
-  // const fetchTodos = async () => {
-  //   try {
-  //     const res = await axios.get('/api/todos');
-  //     setListArray(res.data.todos);
-  //   } catch (error) {
-  //     console.error('Error fetching todos:', error);
-  //   }
-  // };
+  const [changeHandler, setChangeHandler] = useState(false);
+  //Fetch List
+  useEffect(() => {
+    fetchTodos();
+  }, [changeHandler]);
+  const fetchTodos = async () => {
+    try {
+      const res = await axios.get('/api/toDoList');
+      setListArray(res.data.todos);
+    } catch (error) {
+      console.error('Error fetching todos:', error);
+    }
+  };
+  //Change Handler 
+  const handleChange = () => {
+    setChangeHandler(!changeHandler)
+
+  }
+  //Add item to DB 
   const handleAddItem = async () => {
     const res = await axios.post('/api/toDoList', {
       description: inputValue,
-      completed: false
     });
-    console.log("🚀 ~ handleAddItem ~ res:", res)
     setInputValue("");
+    setChangeHandler(!changeHandler)
   };
-  console.log("🚀 ~ Page ~ listArray:", listArray)
 
-  const handleDeleteItem = (index: number) => {
-    const updatedList = [...listArray];
-    updatedList.splice(index, 1);
-    setListArray(updatedList);
-  };
-  const handleEditItem = (index: number, newValue: string) => {
-    const updatedList = [...listArray];
-    // updatedList[index] = newValue;
-    setListArray(updatedList);
-  };
   const setInputValueHandler = (item: string) => {
     setInputValue(item)
   }
@@ -68,9 +64,8 @@ export default function Page(): JSX.Element {
             </Typography></Grid>
         </Box>
         <ShowListWithIconsToDeleteAndEditAndImage
-          onDeleteItem={handleDeleteItem}
-          onEditItem={handleEditItem}
           items={listArray}
+          handleChanges={handleChange}
         />
       </OutlinedCard>
     </main >
