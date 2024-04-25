@@ -3,10 +3,15 @@ import { todoTask } from '../../../lib/model/todoTask';
 import dbConnect from '../../_mongoDb/db';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(): Promise<NextResponse> {
+export async function GET(req: NextRequest, { params }: any): Promise<NextResponse> {
   try {
+    const url = new URL(req.url);
+    const searchParam = new URLSearchParams(url.searchParams);
+    const userEmail = searchParam.get('email');
+    console.log('🚀 ~ GET ~ email:', userEmail);
     await dbConnect();
-    const todos = await todoTask.find();
+    const todos = await todoTask.find({ userEmail:userEmail });
+    console.log('🚀 ~ GET ~ todos:', todos);
     return NextResponse.json({ todos });
   } catch (error) {
     console.error('Error fetching todos:', error);
@@ -17,8 +22,9 @@ export async function GET(): Promise<NextResponse> {
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     await dbConnect();
-    const { description } = await req.json();
-    const todo = new todoTask({ description: description });
+    const { description, userEmail } = await req.json();
+    console.log('🚀 ~ POST ~ description, userEmail:', description, userEmail);
+    const todo = new todoTask({ description: description, userEmail: userEmail });
     await todo.save();
     return NextResponse.json({ message: 'Todo created successfully', todo });
   } catch (error) {
@@ -29,8 +35,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
 export async function PUT(req: NextRequest): Promise<NextResponse> {
   try {
-    console.log('PUT working');
-
     await dbConnect();
     const { description, id } = await req.json();
     const updatedTodo = await todoTask.findByIdAndUpdate(id, { description }, { new: true });

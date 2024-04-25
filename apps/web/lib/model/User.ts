@@ -1,18 +1,25 @@
-import { Schema, model, models } from "mongoose";
-const userSchema = new Schema({
+import { Schema, Document, model, Model, models, SchemaDefinition } from 'mongoose';
+
+// Define the interface for the user document
+interface UserDocument extends Document {
+  email: string;
+  userName: string;
+  image?: string; // Optional field
+}
+
+// Define the schema for the user model
+const userSchemaDefinition: SchemaDefinition<UserDocument> = {
   email: {
     type: String,
-    required: [true, "Email is required"],
-    unique: [true, "Email must be unique"],
-  },
-  userName: {
-    type: String,
-    required: [true, "userName is required"],
-    unique: [true, "userName must be unique"],
+    required: [true, 'Email is required'],
+    unique: true, // Set unique as boolean
   },
   image: String,
-});
-const User = models.User || model("User", userSchema);
-//Short hand
-//email userName image
-export default User;
+};
+
+const userSchema = new Schema<UserDocument>(userSchemaDefinition);
+
+// Define the model for the user schema
+const UserModel: Model<UserDocument> = models.User || model<UserDocument>('User', userSchema);
+
+export default UserModel;

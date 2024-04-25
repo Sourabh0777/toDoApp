@@ -36,7 +36,6 @@ export default function ShowListWithIconsToDeleteAndEditAndImage({ items, handle
       if (response.data) {
         handleChanges();
       }
-      console.log(response.data);
     } catch (error) {
       console.error('Error deleting todo:', error);
     }
@@ -51,7 +50,6 @@ export default function ShowListWithIconsToDeleteAndEditAndImage({ items, handle
       if (response.data) {
         handleChanges();
       }
-      console.log(response.data);
     } catch (error) {
       console.error('Error updating todo:', error);
     }

@@ -13,5 +13,9 @@ const todotaskModel = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  userEmail: {
+    type: String,
+    required: true,
+  },
 });
 export const todoTask: Model<TodoTaskDocument> = mongoose.models.todoTask || mongoose.model<TodoTaskDocument>('todoTask', todotaskModel);

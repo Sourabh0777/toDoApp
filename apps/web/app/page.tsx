@@ -13,61 +13,24 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import axios from "axios";
+import ToDo from "./home/page";
+import { useSession } from "next-auth/react";
 
-export default function Page(): JSX.Element {
-  const [listArray, setListArray] = useState([]);
-  let [inputValue, setInputValue] = useState("");
-  const [changeHandler, setChangeHandler] = useState(false);
-  //Fetch List
-  useEffect(() => {
-    fetchTodos();
-  }, [changeHandler]);
-  const fetchTodos = async () => {
-    try {
-      const res = await axios.get('/api/toDoList');
-      setListArray(res.data.todos);
-    } catch (error) {
-      console.error('Error fetching todos:', error);
-    }
-  };
-  //Change Handler 
-  const handleChange = () => {
-    setChangeHandler(!changeHandler)
+export default function Page() {
+  const session = useSession()
+  useEffect(() => { }, [session])
+
+  if (session.data === null) {
+    return (
+      <main className={styles.main}>
+        <h1>Login First</h1>
+      </main >
+    );
+  }
+  else {
+    return (<main className={styles.main}>
+      <ToDo></ToDo>
+    </main >)
 
   }
-  //Add item to DB 
-  const handleAddItem = async () => {
-    const res = await axios.post('/api/toDoList', {
-      description: inputValue,
-    });
-    setInputValue("");
-    setChangeHandler(!changeHandler)
-  };
-
-  const setInputValueHandler = (item: string) => {
-    setInputValue(item)
-  }
-
-  return (
-    <main className={styles.main}>
-      <OutlinedCard>
-        <BasicTextFields setInputValueHandler={setInputValueHandler} inputValue={inputValue} />
-        <Button appName="web" className={styles.button} handleAddItem={handleAddItem}>
-          Add
-        </Button>
-        <Divider />
-        <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "row", alignItems: "center" }}>
-          <ImageAvatars imagePath="" />
-          <Grid item xs={12} md={6} marginLeft={5}>
-            <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-              To Do list
-            </Typography></Grid>
-        </Box>
-        <ShowListWithIconsToDeleteAndEditAndImage
-          items={listArray}
-          handleChanges={handleChange}
-        />
-      </OutlinedCard>
-    </main >
-  );
 }
