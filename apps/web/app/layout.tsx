@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Nav from "../Components/Nav";
-import Provider from "../Components/Provider";
+import Providers from "./providers";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,12 +16,12 @@ export default function RootLayout({ children, session }: any): JSX.Element {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider session={session} >
+        <Providers session={session} >
           <main>
             <Nav />
             {children}
           </main>
-        </Provider>
+        </Providers>
       </body>
     </html>
   );
